@@ -33,7 +33,7 @@ python demo/inference_demo.py
 
 > Note: during training, only the model file is saved, for the image pre-processing, it is not saved, you need to manually put the pre-processing configuration file into the model file to be used
 
-## FQA
+## FAQ
 1. open too many file
 ```
 ulimit -n xxx  # increase open file
