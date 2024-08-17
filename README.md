@@ -51,11 +51,10 @@ ulimit -n xxx  # increase open file
 If you find this project helpful and would like to support the author, you can make a donation using WeChat Pay or Alipay by scanning the QR codes below.
 
 **WeChat Pay:**
-
-![WeChat Pay QR Code](assets/WeChat%20Pay.jpg)
+<img src="assets/WeChat%20Pay.jpg" alt="WeChat Pay QR Code" width="300"/>
 
 **Alipay:**
+<img src="assets/Alipay.jpg" alt="WeChat Pay QR Code" width="300"/>
 
-![Alipay QR Code](assets/Alipay.jpg)
 
 Thank you for your support!
