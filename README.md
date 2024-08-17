@@ -1,6 +1,9 @@
 # Image Classification
 
+You can track the latest updates by visiting the project's github address：[Image Classification Repository](https://github.com/ciaoyizhen/image_classification)
+
 Requirement:
+
 ```
 python >= 3.8
 ```
@@ -37,7 +40,7 @@ ulimit -n xxx  # increase open file
 ```
 2. How to download a model to train
 ```
-1. open this [link](https://huggingface.co/models?pipeline_tag=image-classification&sort=trending)
+1. open this (https://github.com/ciaoyizhen/image_classification)
 2. choose and download a model
 3. modify yaml
 ```
