@@ -91,56 +91,32 @@ class ImgTrainer():
         # special process
         if "f1" in evaluate_metric:
             evaluate_metric.remove("f1")
-            self.f1_metric = evaluate.load("f1")
+            self.f1_metric = evaluate.load("metrics/f1")
         else:
             self.f1_metric = None
             
         if "recall" in evaluate_metric:
             evaluate_metric.remove("recall")
-            self.recall_metric = evaluate.load("recall")
+            self.recall_metric = evaluate.load("metrics/recall")
         else:
             self.recall_metric = None
             
         if "precision" in evaluate_metric:
             evaluate_metric.remove("precision")
-            self.precision_metric = evaluate.load("precision")
+            self.precision_metric = evaluate.load("metrics/precision")
         else:
             self.precision_metric = None
-            
-        try:
-            self.metric = evaluate.combine(evaluate_metric)
-        except:
-            logger.error(traceback.format_exc())
-            logger.error(f"{evaluate_metric} could not be loaded")
-            raise
+        
+        if "accuracy" in evaluate_metric:
+            evaluate_metric.remove("accuracy")
+            self.accuracy_metric = evaluate.load("metrics/accuracy")
+        else:
+            self.accuracy_metric = None
+        
+        assert len(evaluate_metric) == 0, f"{evaluate_metric} could not be loaded"
 
-    def eval_metric(self, eval_predict):
-        """calculation accuracy
 
-        Args:
-            eval_predict (dict): model output
-
-        Returns:
-            dict: accuracy
-        """
-        predictions, labels = eval_predict
-        predictions = predictions.argmax(axis=-1)
-        print(predictions)
-        acc = self.metric.compute(predictions=predictions, references=labels)
-        print(acc)
-        if self.f1_metric is not None:
-            f1 = self.f1_metric.compute(predictions=predictions, references=labels, average="weighted")
-            acc.update(f1)
-        print(acc)
-        if self.recall_metric is not None:
-            recall = self.recall_metric.compute(predictions=predictions, references=labels, average="weighted")
-            acc.update(recall)
-        print(acc)
-        if self.precision_metric is not None:
-            precision = self.precision_metric.compute(predictions=predictions, references=labels, average="weighted")
-            acc.update(precision)
-        print(acc)
-        return acc
+ 
 
     def _createTrainer(self):
         """create Trainer
@@ -157,7 +133,10 @@ class ImgTrainer():
             """
             predictions, labels = eval_predict
             predictions = predictions.argmax(axis=-1)
-            acc = self.metric.compute(predictions=predictions, references=labels)
+            acc = {}
+            if self.accuracy_metric is not None:
+                acc_ = self.accuracy_metric.compute(predictions=predictions, references=labels)
+                acc.update(acc_)
             if self.f1_metric is not None:
                 f1 = self.f1_metric.compute(predictions=predictions, references=labels, average="weighted")
                 acc.update(f1)

@@ -2,7 +2,10 @@
 
 You can track the latest updates by visiting the project's github address：[Image Classification Repository](https://github.com/ciaoyizhen/image_classification)
 
-Requirement:
+## update
+2024.8.19: support use evaluate in offline
+
+## Requirement:
 
 ```
 python >= 3.8
