@@ -98,8 +98,9 @@ class Dataset():
         def process(example):
             text = example["text"]
             img_path, label = text.split("\t")
-            img = Image.open(img_path)
             try:
+                img = Image.open(img_path)
+                img = img.convert('RGB')  # may png?
                 inputs = self.processor(images=img, return_tensors="pt")
                 inputs = {"pixel_values": inputs["pixel_values"].squeeze(0)}  # remove batch dim
             except KeyboardInterrupt:
