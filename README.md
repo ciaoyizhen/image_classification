@@ -22,7 +22,7 @@ Use huggingface to implement a variety of tasks, and you can replace the model a
 4. modify yaml config
 5. torchrun main.py (yaml_path) or python main.py
 ```
-> Note: multi-gpu  use  torchrun nproc_per_node=x main.py your_yaml
+> Note: multi-gpu  use  torchrun --nproc_per_node=x main.py your_yaml
 
 ## Eval Step:
 ```
