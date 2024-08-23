@@ -3,8 +3,8 @@
 You can track the latest updates by visiting the project's github address：[Image Classification Repository](https://github.com/ciaoyizhen/image_classification)
 
 ## update
-2024.8.19: support use evaluate in offline
-
+2024.8.19: Support use evaluate in offline
+2024.8.23: Supports dynamic loading of data
 ## Requirement:
 
 ```
@@ -44,9 +44,15 @@ ulimit -n xxx  # increase open file
 ```
 2. How to download a model to train
 ```
-1. open this (https://github.com/ciaoyizhen/image_classification)
+1. open this (https://huggingface.co/models)
 2. choose and download a model
 3. modify yaml
+```
+3. Multi Gpu how to train
+```
+torchrun --nproc-per-node=x main.py configs/test.yaml
+
+see more in (https://pytorch.org/docs/stable/elastic/run.html)
 ```
 
 
