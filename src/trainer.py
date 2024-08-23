@@ -6,6 +6,7 @@
 # @Function:   train scripts
 
 import os
+import torch
 import logging
 import traceback
 import evaluate
@@ -122,7 +123,7 @@ class ImgTrainer():
         """create Trainer
         """
         
-        def eval_metric(eval_predict):
+        def evalMetric(eval_predict):
             """calculation accuracy
 
             Args:
@@ -148,13 +149,14 @@ class ImgTrainer():
                 acc.update(precision)
             return acc
         
+        
         self.trainer = Trainer(
             model = self.model.model,
             args= self.train_args,
             data_collator=DefaultDataCollator(),
             train_dataset=self.train_dataset.data,
             eval_dataset=self.validation_dataset.data,
-            compute_metrics=eval_metric
+            compute_metrics=evalMetric
         )
         
     def __call__(self):

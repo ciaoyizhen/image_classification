@@ -4,8 +4,6 @@
 # @Author  :   ciaoyizhen
 # @Contact :   yizhen.ciao@gmail.com
 # @Function:   utils function
-import os
-import shutil
 import importlib
 from typing import Tuple, Dict, Type
 
@@ -58,6 +56,3 @@ def loadLabelFile(config:dict) -> Tuple[Dict[int, str], Dict[str, int]]:
                 id_ += 1
                 
     return id2label, label2id
-                
-def initDir(dir:str):
-    pass

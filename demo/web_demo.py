@@ -12,7 +12,7 @@ from PIL import Image
 import torch
 
 
-model_name = "outputs/weather_predict/checkpoint-112"
+model_name = "outputs/weather_predict/checkpoint-113"
 model = AutoModelForImageClassification.from_pretrained(model_name)
 processor = AutoImageProcessor.from_pretrained(model_name)
 

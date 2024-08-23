@@ -19,6 +19,7 @@ train_args:
   logging_steps: 10
   num_train_epochs: 1
   logging_first_step: true
+  remove_unused_columns: false  #! importance! This is must be false. Because our data will be load when training. If we remove unused_columns, we will not any data
 evaluate_metric:
   #! Optional: `evaluate package` could load.  some metric need special process.
   - "accuracy"
