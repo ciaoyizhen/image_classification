@@ -4,11 +4,7 @@
 # @Author  :   ciaoyizhen
 # @Contact :   yizhen.ciao@gmail.com
 # @Function:   inference_demo
-"""
-A small operation is needed here
-Because the model is saved without saving the preprocess
-So you need to manually put the preprocess_config.json to the location where the model was saved.
-"""
+
 import torch
 from PIL import Image
 from transformers import AutoModelForImageClassification, AutoImageProcessor

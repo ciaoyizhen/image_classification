@@ -12,7 +12,7 @@ from datasets import load_dataset, concatenate_datasets
 
 
 class Dataset():
-    def __init__(self, cfg, id2label, label2id):
+    def __init__(self, cfg, id2label, label2id, processor):
         """init
 
         Args:
@@ -21,6 +21,7 @@ class Dataset():
         self.cfg = cfg
         self.id2label = id2label
         self.label2id = label2id
+        self.processor = processor
         self.format_map = {
             ".txt": "text",
             ".csv": "csv",
@@ -28,7 +29,6 @@ class Dataset():
             ".tsv": "csv"
         }
         self._loadData()  # str format not Tensor
-        self._createPreProcess()
         self._process()
     
     def _chooseFileFormat(self, file_path:str) -> str:
@@ -70,12 +70,6 @@ class Dataset():
                 format_ = self._chooseFileFormat(data_path)
                 datasets.append(load_dataset(format_, data_files=data_path, split="train"))
             self.data = concatenate_datasets(datasets)
-
-    def _createPreProcess(self):
-        """create AutoImageProcessor
-        """
-        print("creating processor")
-        self.processor = getClass(self.cfg["processor"]["type"]).from_pretrained(**self.cfg["processor"]["args"])
 
 
     

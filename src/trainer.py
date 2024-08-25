@@ -30,6 +30,7 @@ class ImgTrainer():
         self.config = config
         self.id2label = id2label
         self.label2id = label2id
+        self._createProcessor()
         self._initDataset()
         self._initModel()
         self._initTrainArgument()
@@ -57,19 +58,22 @@ class ImgTrainer():
         test_cfg = self.config.get("test_dataset", None)
         
         assert train_cfg is not None, "train_dataset needs to be configured in the config yaml file"
-        self.train_dataset = getClass(train_cfg["type"])(train_cfg["args"], self.id2label, self.label2id)
+        self.train_dataset = getClass(train_cfg["type"])(train_cfg["args"], self.id2label, self.label2id, self.processor)
         
         if validation_cfg is None:
             self.validation_dataset = self.train_dataset
             logger.info("validation_dataset not be set, using train_dataset")
         else:
-            self.validation_dataset = getClass(validation_cfg["type"])(validation_cfg["args"], self.id2label, self.label2id)
+            self.validation_dataset = getClass(validation_cfg["type"])(validation_cfg["args"], self.id2label, self.label2id, self.processor)
         
         if test_cfg is None:
             self.test_dataset = self.validation_dataset
             logger.info("test_dataset is not be set, using validation_dataset")
         else:
-            self.test_dataset = getClass(test_cfg["type"])(test_cfg["args"], self.id2label, self.label2id)
+            self.test_dataset = getClass(test_cfg["type"])(test_cfg["args"], self.id2label, self.label2id, self.processor)
+
+    def _createProcessor(self):
+        self.processor = getClass(self.config["processor"]["type"]).from_pretrained(**self.config["processor"]["args"])
 
     def _initModel(self):
         """init model
@@ -156,7 +160,8 @@ class ImgTrainer():
             data_collator=DefaultDataCollator(),
             train_dataset=self.train_dataset.data,
             eval_dataset=self.validation_dataset.data,
-            compute_metrics=evalMetric
+            compute_metrics=evalMetric,
+            tokenizer=self.processor
         )
         
     def __call__(self):

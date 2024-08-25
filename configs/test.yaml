@@ -8,6 +8,10 @@ model:
   type: transformers,AutoModelForImageClassification
   args:
     pretrained_model_name_or_path: "weights/swinv2-tiny-patch4-window8-256"  # used model
+processor:
+  type: transformers,AutoImageProcessor
+  args:
+    pretrained_model_name_or_path: "weights/swinv2-tiny-patch4-window8-256" # used model
 
 train_args:
   #! Optional: transformers.TrainingArguments
@@ -32,27 +36,18 @@ train_dataset:  # train_dataset configure
   args:  # class args
     data_paths:
       - configs/train_data.txt  # data_path  Currently only .txt format is implemented `{img_path}\t{label}`
-    processor:
-      type: transformers,AutoImageProcessor
-      args:
-        pretrained_model_name_or_path: "weights/swinv2-tiny-patch4-window8-256" # used model
+
 
 validation_dataset:
   type: src.dataset,Dataset
   args:
     data_paths:
       - configs/validation_data.txt
-    processor:
-      type: transformers,AutoImageProcessor
-      args:
-        pretrained_model_name_or_path: "weights/swinv2-tiny-patch4-window8-256" # used model
+
 
 test_dataset:
   type: src.dataset,Dataset
   args:
     data_paths:
       - configs/test_data.txt
-    processor:
-      type: transformers,AutoImageProcessor
-      args:
-        pretrained_model_name_or_path: "weights/swinv2-tiny-patch4-window8-256" # used model
+

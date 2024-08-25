@@ -5,6 +5,7 @@ You can track the latest updates by visiting the project's github address：[Ima
 ## update
 2024.8.19: Support use evaluate in offline
 2024.8.23: Supports dynamic loading of data
+2024.8.25: Fix processor not be save in model
 ## Requirement:
 
 ```
@@ -35,7 +36,7 @@ python demo/inference_demo.py
 2. open link with your browser
 ```
 
-> Note: during training, only the model file is saved, for the image pre-processing, it is not saved, you need to manually put the pre-processing configuration file into the model file to be used
+
 
 ## FAQ
 1. open too many file
