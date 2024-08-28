@@ -7,6 +7,7 @@ You can track the latest updates by visiting the project's github address：[Ima
 2024.8.19: Support use evaluate in offline
 2024.8.23: Supports dynamic loading of data
 2024.8.25: Fix processor not be save in model
+2024.8.28: Support Data Enhancement
 ```
 ## Requirement:
 

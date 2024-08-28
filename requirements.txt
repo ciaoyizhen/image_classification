@@ -10,3 +10,4 @@ gradio==4.41.0
 evaluate
 accelerate
 scikit-learn
+albumentations

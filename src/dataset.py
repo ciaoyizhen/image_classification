@@ -6,6 +6,8 @@
 # @Function:   data
 import os
 import torch
+import numpy as np
+import albumentations as A
 from PIL import Image
 from .utils import getClass
 from datasets import load_dataset, concatenate_datasets
@@ -29,6 +31,7 @@ class Dataset():
             ".tsv": "csv"
         }
         self._loadData()  # str format not Tensor
+        self._createTransform()
         self._process()
     
     def _chooseFileFormat(self, file_path:str) -> str:
@@ -71,7 +74,22 @@ class Dataset():
                 datasets.append(load_dataset(format_, data_files=data_path, split="train"))
             self.data = concatenate_datasets(datasets)
 
-
+    def _createTransform(self):
+        if "albumentations" in self.cfg:
+            albumentations_ = self.cfg["albumentations"]
+        else:
+            self.transform = None
+            return
+        A_list = []
+        for item in albumentations_:
+            kwargs = item.get("args", None)
+            module_ = getClass(item["type"])
+            if kwargs is not None:
+                class_ = module_(**kwargs)
+            else:
+                class_ = module_()
+            A_list.append(class_)
+        self.transform = A.Compose(A_list)
     
     def _process(self):
         """load image to tensor and apply transformer
@@ -87,6 +105,10 @@ class Dataset():
                 try:
                     img = Image.open(img_path)
                     img = img.convert("RGB")  # may png or other format
+                    if self.transform is not None:
+                        img = np.asarray(img)
+                        transform_img = self.transform(image = img)
+                        img = transform_img["image"]
                     inputs = self.processor(images=img, return_tensors="pt")
                     img = inputs["pixel_values"].squeeze(0)
                     label = self.label2id[label]
@@ -94,6 +116,7 @@ class Dataset():
                     images.append(img)
                     labels.append(label)
                 except:
+
                     continue
             return {"pixel_values": torch.stack(images), "labels": torch.stack(labels)}
 
