@@ -8,6 +8,7 @@ You can track the latest updates by visiting the project's github address：[Ima
 2024.8.23: Supports dynamic loading of data
 2024.8.25: Fix processor not be save in model
 2024.8.28: Support Data Enhancement
+2024.9.2: Support displaying top_k and its probability in web demo
 ```
 ## Requirement:
 
